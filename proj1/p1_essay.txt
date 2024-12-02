@@ -1,0 +1,44 @@
+Bardia Ahmadi Dafchahi
+CS212
+
+Some helpful tips on Vim:
+
+
+	1. the command to save -- :w
+	2. the command to exit -- :q
+	3. press "g CTRL-g" to see useful info
+	4. press I when in command mode to enter insert mode
+	5. press "cc" in command mode to cut a line
+	6. press "p" in commnad mode to paste
+	7. press "dd" in commnad mode to delete a line
+	8. "u" for undo and ":undo" for undo
+	9. "$" to jump to the end of the line and "0" for the start of the line
+	10. the command /<text> to search for text
+	11. to see the line numbers run the command :set number
+	12. the command :line_number to go to line_number
+	13. to set the line numbers relative to your current line run :set relativenumber
+	14. use :set nocompatible to fix the issue with keybaord on vim when using vi to open vim
+	
+	and last but not least:
+	15. press o in command mode to insert a new line
+
+and as for the essay:
+
+There are a lot of things that I don't know about c but I know a good portion of the syntaxes
+and how to make functions and structures and how to make pointers, but I have yet to understand how
+they actually work which brings me to my next point of what I would love to learn in the furutre.
+
+I really hope to get to know more about the essentials of operating systems like how they work and
+maybe how to even modify one like this one that I'm using right now. And of course when doing so,
+it is going to take a long time, so I would have to make that when I recognize all my routines, 
+find a solution that makes it more efficient and make modifications such that it makes me more time
+efficient.
+
+In fact, the c programming language is not the only thing that I like to learn more about; data
+structures and problem solving skills are things that I would like to improve, but I know that it
+would take a long time, so rather in just this course, it should be my focus through out different
+classes 
+
+Not only that I want to use my CS skill in the field in a future job, I want to utilize the problem
+solving skills that I've accumilated and use it to solve other problems in my life. 
+

@@ -1,0 +1,11 @@
+#!bin/bash
+
+cd tmp.*
+chmod -R 755 dir1
+chmod -R 755 dir2
+
+rm -R dir1
+rm -R dir2
+
+cd ..
+rmdir tmp.*

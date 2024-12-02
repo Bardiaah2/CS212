@@ -1,0 +1,32 @@
+#!bin/bash
+
+if [ $1 = "root" ]; then
+	echo "can't make files in root" # make sure $1 is not root
+fi
+
+mkdir $1
+cd $1 
+
+mkdir dir1 # make dir1
+mkdir dir2 # make dir2 
+
+cd dir2  
+echo "Hi" > fileB # make fileB with contents
+chmod 640 fileB # change the permission for fileB
+cd .. # goes back to Root dir/
+chmod 755 dir2 # change the permission for dir2
+
+cd dir1
+
+mkdir dir3
+cd dir3
+mkdir dir4
+chmod 500 dir4
+echo "Bye" > fileC
+chmod 600 fileC
+cd .. # goes back to dir3/
+chmod 000 dir3
+echo "fileA!" > fileA
+chmod 600 fileA
+cd .. # goes back to Root dir
+chmod 700 dir1

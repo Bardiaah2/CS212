@@ -1,0 +1,284 @@
+#!/bin/bash
+
+## Run bash proj3B_checker.sh with proj3B.tgz, test3B.c at the same directory
+if [[ ! -f test3B.c || ! -f proj3B.tgz ]] ; then
+   echo "Put proj3B.tgz, test3B.c at the same directory"
+   echo "Then run: bash proj3B_checker.sh"
+   echo "FAILED"
+   exit 1
+fi
+
+
+## Overwrite the test folder!, unzip files
+rm -r -f test3Bfolder
+mkdir test3Bfolder
+tar -xf proj3B.tgz -C ./test3Bfolder
+cp test3B.c ./test3Bfolder
+cd test3Bfolder
+
+
+## Make sure to have these 6 files
+if [[ ! -f proj3B.c ]] ; then
+   echo "Cannot find file proj3B.c"
+   echo "FAILED"
+   cd ../
+   exit 1
+fi
+
+if [[ ! -f proj3B_deque.c ]] ; then
+   echo "Cannot find file proj3B_deque.c"
+   echo "FAILED"
+   cd ../
+   exit 1
+fi
+
+if [[ ! -f proj3B_deque.h ]] ; then
+   echo "Cannot find file proj3B_deque.h"
+   echo "FAILED"
+   cd ../
+   exit 1
+fi
+
+if [[ ! -f proj3B_input.scr ]] ; then
+   echo "Cannot find file proj3B_input.scr "
+   echo "FAILED"
+   cd ../
+   exit 1
+fi
+
+if [[ ! -f proj3B_output.txt ]] ; then
+   echo "Cannot find file proj3B_output.txt"
+   echo "FAILED"
+   cd ../
+   exit 1
+fi
+
+if [[ ! -f Makefile ]] ; then
+   echo "Cannot find file Makefile"
+   echo "FAILED"
+   cd ../
+   exit 1
+fi
+
+
+## Running unit test test3B.c
+gcc test3B.c proj3B_deque.c -o test3B
+./test3B > test_output.txt
+
+if [[ ! -s test_output.txt ]]; then
+	echo "Passed unit test."
+	rm test3B test_output.txt
+else
+	echo "Unit test output:"
+	cat test_output.txt
+	echo "Unit test FAILED"
+	cd ../
+	exit 1
+fi
+
+## Run make
+echo "/*-----Running your Makefile-----*/:"
+make all
+echo "/*--------------------------------*/"
+
+if [[ ! -f proj3B ]] ; then
+   echo "Make FAILED."
+   cd ../
+   exit 1
+fi
+
+## Test proj3B_input.scr
+correctDefault="Please enter an integer or a string (empty to exit): 
+You entered the string: \"will\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"be\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"I\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"unscrambled!\"
+Please enter an integer or a string (empty to exit): 
+You entered the number: 2
+Please enter an integer or a string (empty to exit): 
+You entered the number: 3
+Please enter an integer or a string (empty to exit): 
+You entered the number: 1
+Please enter an integer or a string (empty to exit): 
+You entered the number: 4
+Please enter an integer or a string (empty to exit): 
+
+Printing string deque
+I will be unscrambled! 
+
+Printing long deque
+1 2 3 4 
+
+Removing string deque data using count
+Removing unscrambled!
+Removing I
+Removing be
+Removing will
+
+Removing long deque data using count
+Removing 4
+Removing 1
+Removing 3
+Removing 2"
+echo "$correctDefault" > proj3B_correct.txt
+
+./proj3B < proj3B_input.scr > proj3B_output.txt
+
+diff proj3B_output.txt proj3B_correct.txt > /dev/null
+if [[ $? == 0 ]] ; then
+	echo "Passed assignment test."
+	rm proj3B_correct.txt
+else
+	echo "diff proj3B_output.txt proj3B_correct.txt results:"
+	diff proj3B_output.txt proj3B_correct.txt
+	echo "Assignment test case FAILED"
+	cd ../
+	exit 1
+fi
+
+
+## Custom test 1
+test1="0001
+1234
+55599
+03213
+320000
+45029
+2222
+212
+
+
+42222"
+echo "$test1" > proj3B_input1.scr
+
+correct1="Please enter an integer or a string (empty to exit): 
+You entered the number: 1
+Please enter an integer or a string (empty to exit): 
+You entered the number: 1234
+Please enter an integer or a string (empty to exit): 
+You entered the number: 55599
+Please enter an integer or a string (empty to exit): 
+You entered the number: 3213
+Please enter an integer or a string (empty to exit): 
+You entered the number: 320000
+Please enter an integer or a string (empty to exit): 
+You entered the number: 45029
+Please enter an integer or a string (empty to exit): 
+You entered the number: 2222
+Please enter an integer or a string (empty to exit): 
+You entered the number: 212
+Please enter an integer or a string (empty to exit): 
+
+Printing string deque
+
+
+Printing long deque
+2222 320000 55599 1 1234 3213 45029 212 
+
+Removing string deque data using count
+
+Removing long deque data using count
+Removing 212
+Removing 2222
+Removing 45029
+Removing 320000
+Removing 3213
+Removing 55599
+Removing 1234
+Removing 1"
+echo "$correct1" > proj3B_correct1.txt
+
+./proj3B < proj3B_input1.scr > proj3B_output1.txt
+
+diff proj3B_output1.txt proj3B_correct1.txt > /dev/null
+if [[ $? == 0 ]] ; then
+	echo "Passed test 1."
+	rm proj3B_output1.txt proj3B_correct1.txt
+else
+	echo "diff proj3B_output1.txt proj3B_correct1.txt results:"
+	diff proj3B_output1.txt proj3B_correct1.txt
+	echo "Test1 FAILED"
+	cd ../
+	exit 1
+fi
+
+
+## Custom test 2
+test2="Up!
+N4v4r
+Y0u
+G0nna
+G1v3
+L3t
+G0nna
+Y0u
+N4v4r
+D0wn!
+
+"
+echo "$test2" > proj3B_input2.scr
+
+correct2="Please enter an integer or a string (empty to exit): 
+You entered the string: \"Up!\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"N4v4r\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"Y0u\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"G0nna\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"G1v3\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"L3t\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"G0nna\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"Y0u\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"N4v4r\"
+Please enter an integer or a string (empty to exit): 
+You entered the string: \"D0wn!\"
+Please enter an integer or a string (empty to exit): 
+
+Printing string deque
+N4v4r G0nna G1v3 Y0u Up! N4v4r G0nna L3t Y0u D0wn! 
+
+Printing long deque
+
+
+Removing string deque data using count
+Removing D0wn!
+Removing N4v4r
+Removing Y0u
+Removing G0nna
+Removing L3t
+Removing G1v3
+Removing G0nna
+Removing Y0u
+Removing N4v4r
+Removing Up!
+
+Removing long deque data using count"
+echo "$correct2" > proj3B_correct2.txt
+
+./proj3B < proj3B_input2.scr > proj3B_output2.txt
+
+diff proj3B_output2.txt proj3B_correct2.txt > /dev/null
+if [[ $? == 0 ]] ; then
+	echo "Passed test 2."
+	rm proj3B_output2.txt proj3B_correct2.txt
+else
+	echo "diff proj3B_output2.txt proj3B_correct2.txt results:"
+	diff proj3B_output2.txt proj3B_correct2.txt
+	echo "Test2 FAILED"
+	cd ../
+	exit 1
+fi
+
+
+echo "Success. Congrats!"
+echo "Check with valgrind to ensure all memory leaks are removed."
+cd ../
