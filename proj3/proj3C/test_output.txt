@@ -1,0 +1,8 @@
+test hash passed.
+test insert passed
+get passed
+free pased
+clean up results passed
+non-existing key
+load factor passed
+free hash table passed
